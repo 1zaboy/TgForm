@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Create the result string
             const result = checkedItems.join(',');
+
+            alert('Start');
             
             // Send data back to Telegram
             await tg.sendData(result);
