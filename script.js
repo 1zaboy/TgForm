@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Send data back to Telegram
             await tg.sendData(result);
-alert('Отправлено');
+alert(result);
             
             // Close the WebApp after successful data sending
             await tg.close();
