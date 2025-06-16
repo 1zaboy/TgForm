@@ -48,17 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = checkedItems.join(',');
             
             // Send data back to Telegram
-            await new Promise((resolve, reject) => {
-                try {
-                    tg.sendData(result);
-                    // Add a small delay to ensure data is sent
-                    setTimeout(() => {
-                        resolve();
-                    }, 100);
-                } catch (error) {
-                    reject(error);
-                }
-            });
+            await tg.sendData(result);
             
             // Close the WebApp after successful data sending
             tg.close();
