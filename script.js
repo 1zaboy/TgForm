@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await tg.sendData(result);
             
             // Close the WebApp after successful data sending
-            tg.close();
+            await tg.close();
         } catch (error) {
             console.error('Error sending data to Telegram:', error);
             alert('Ошибка отправки данных. Пожалуйста, попробуйте еще раз.');
