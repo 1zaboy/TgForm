@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Form</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <title>Telegram Form</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Выберите нужные пункты</h1>
-        <form id="telegramForm">
-            <div id="checkboxes-container">
-                <!-- Checkboxes will be added here dynamically -->
-            </div>
-            <button type="submit" id="submitBtn">Подтвердить</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
+  <h3>Введите имя:</h3>
+  <input type="text" id="name" placeholder="Ваше имя">
+  <br><br>
+  <button onclick="submitData()">Отправить</button>
+
+  <script>
+    function submitData() {
+      const name = document.getElementById('name').value;
+      Telegram.WebApp.sendData(name); // Отправка данных обратно в бот
+    }
+
+    Telegram.WebApp.ready(); // Сообщаем Telegram, что форма готова
+  </script>
 </body>
-</html> 
+</html>
