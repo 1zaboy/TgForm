@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Telegram WebApp
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Expand to full height
+    
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const items = urlParams.get('items')?.split(',') || [];
@@ -38,12 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = checkedItems.join(',');
         
         // Send data back to Telegram
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.sendData(result);
-        } else {
-            // For testing purposes, show the result in console
-            console.log('Selected items:', result);
-            alert('Selected items: ' + result);
+        try {
+            tg.sendData(result);
+            tg.close(); // Close the WebApp after sending data
+        } catch (error) {
+            console.error('Error sending data to Telegram:', error);
+            alert('Ошибка отправки данных. Пожалуйста, попробуйте еще раз.');
         }
     });
 }); 
