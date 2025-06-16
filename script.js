@@ -2,10 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.expand(); // Expand to full height
-
-    if (!tg || !tg.sendData) {
-    alert('Форма открыта вне Telegram WebApp');
-}
     
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -35,23 +31,44 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Handle form submission
     const form = document.getElementById('telegramForm');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Get all checked items
-        const checkedItems = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-            .map(checkbox => checkbox.name);
+        // Disable submit button to prevent double submission
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
         
-        // Create the result string
-        const result = checkedItems.join(',');
-        
-        // Send data back to Telegram
         try {
-            tg.sendData(result);
-            tg.close(); // Close the WebApp after sending data
+            // Get all checked items
+            const checkedItems = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.name);
+            
+            // Create the result string
+            const result = checkedItems.join(',');
+            
+            // Send data back to Telegram
+            await new Promise((resolve, reject) => {
+                try {
+                    tg.sendData(result);
+                    // Add a small delay to ensure data is sent
+                    setTimeout(() => {
+                        resolve();
+                    }, 100);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+            
+            // Close the WebApp after successful data sending
+            tg.close();
         } catch (error) {
             console.error('Error sending data to Telegram:', error);
             alert('Ошибка отправки данных. Пожалуйста, попробуйте еще раз.');
+            
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Подтвердить';
         }
     });
 }); 
