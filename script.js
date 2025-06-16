@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.expand(); // Expand to full height
+
+    if (!tg || !tg.sendData) {
+    alert('Форма открыта вне Telegram WebApp');
+}
     
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
